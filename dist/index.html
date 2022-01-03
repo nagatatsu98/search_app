@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+	<meta charset="UTF-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>Document</title>
+	<!-- CSS -->
+	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/normalize/8.0.1/normalize.css">
+	<link rel="stylesheet" href="https://unpkg.com/swiper/swiper-bundle.min.css">
+
+	<!-- javascript -->
+	<script src="https://kit.fontawesome.com/78f047775a.js" crossorigin="anonymous"></script>
+</head>
+<body>
+	<div id="app">
+		<div class="header">
+			<div class="header-logo">
+				<a href="/" class="logo">steamのapiでnewsをとるアプリ</a>
+			</div>
+			<div class="header-search">
+				<a class="search-open" @click="openSearchBox">
+					<i class="fa fa-search" aria-hidden="true"></i>
+				</a>
+				<div class="search-wrap" :class="{ active: isActive }">
+					<div class="search-box bg-black">
+						<input class="search-text" @keydown.enter="searchGame" v-model="gameName" type="text" placeholder="ゲームを探す">
+						<a class="search-close"	@click="closeSearchBox">
+							<i class="fa fa-times" aria-hidden="true"></i>
+						</a>
+					</div>
+
+					<div class="game-names">
+						<li @click="getNews" v-for="name in gameNames">{{ name }}</li>
+					</div>
+					<div class="search-result-note">{{ newsResuestResult }}</div>
+				</div>
+			</div>
+		</div>
+
+		<div class="main">
+			<section class="note">
+				<div class="note-heading">
+					<div>NOTE</div>
+				</div>
+				<div class="note-ticker">
+					<div>お手軽なsteam web APIを使ってみます</div>
+				</div>
+			</section>
+			<section class="home-search">
+				<div class="home-search-tab">
+					<div class="home-search-tab-item">
+						<span>news</span>
+						<p>ニュースを調べる</p>
+					</div>
+					<div class="home-search-tab-item">
+						<span>overview</span>
+						<p>概要を調べる</p>
+					</div>
+				</div>
+				<h1 class="home-search-title">
+					ゲームについて調べてみよう
+				</h1>
+				<p class="home-search-p">
+					steamにあるゲームなら、情報がすぐ見つかる(仮)
+				</p>
+				<div class="home-search-input-wrapper">
+					<input class="home-search-input" @keydown.enter="searchGame" v-model="gameName">
+					
+					<div class="home-search-result game-names">
+						<li @click="getNews" v-for="name in gameNames">{{ name }}</li>
+					</div>
+
+					<div class="home-search-note">{{ newsResuestResult }}</div>
+				</div>
+			</section>
+			<section class="gamenews" v-show="newsItems.length">
+				<div class="gamenews-item" v-for="item in newsItems">
+					<img class="gamenews-img" v-bind:src="item.imgUrl" alt="" width="100%" height="8rem">
+					<a class="gamenews-title" :href="item.url">
+						{{ item.title }}
+					</a>
+					<div class="gamenews-content" v-html="item.contents"></div>
+				</div>
+			</section>
+			
+		</div>
+	</div>
+
+	
+
+	<section class="swiper main-slider bg">
+		(仮)
+		<div class="swiper-wrapper">
+			<a class="swiper-slide main-slider-item border-radius">
+				<img class="border-radius shadow" src="./img/home/best_game_2021.png">
+				<h3 class="title">2021年ランキング</h3>
+			</a>
+			<a class="swiper-slide main-slider-item border-radius">
+				<img class="border-radius shadow" src="./img/home/best_game_2020.png">
+				<h3 class="title">2020年ランキング</h3>
+			</a>
+			<a class="swiper-slide main-slider-item border-radius">
+				<img class="border-radius shadow" src="./img/home/best_game_2019.png">
+				<h3 class="title">2019年ランキング</h3>
+			</a>
+		</div>
+	</section>
+	
+	<script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+
+	<script src="https://unpkg.com/swiper/swiper-bundle.min.js"></script>
+	<script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+	<script src="./main.js"></script>
+
+</body>
+</html>
